@@ -34,7 +34,7 @@ public class KafkaApplication {
 
 					@Override
 					public void onSuccess(SendResult<String, String> result) {
-						System.out.println("succes fully produce " + number);
+						System.out.println("succes fully produce " + result.getRecordMetadata().toString());
 						
 					}
 
