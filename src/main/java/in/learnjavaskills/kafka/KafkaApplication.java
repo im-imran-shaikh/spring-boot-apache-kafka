@@ -28,7 +28,7 @@ public class KafkaApplication {
 			.forEach(number -> {
 				
 				ListenableFuture<SendResult<String, String>> future = 
-						kafkaTemplate.send("truck-status-topic", "KEY_" + number , " producing messaging topic in key value pair"); 
+						kafkaTemplate.send("truck-status-topic", "KEY_" + number , "producing messaging topic in key value pair"); 
 				
 				future.addCallback(new KafkaSendCallback<String, String>() {
 
