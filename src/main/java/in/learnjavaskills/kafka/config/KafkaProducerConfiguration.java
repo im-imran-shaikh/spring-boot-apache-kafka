@@ -11,6 +11,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
+import org.springframework.kafka.support.serializer.JsonSerializer;
+
+import in.learnjavaskills.kafka.dto.Patients;
 
 @Configurable
 public class KafkaProducerConfiguration 
@@ -20,15 +23,16 @@ public class KafkaProducerConfiguration
 	
 	
 	@Bean
-	public KafkaTemplate<String, String> kafkaTemplate(ProducerFactory<String, String> producerFactory)
+	public KafkaTemplate<String, Patients> kafkaTemplate(ProducerFactory<String, Patients> producerFactory)
 	{
 		return new KafkaTemplate<>(producerFactory);
 	}
 	
 	@Bean
-	public ProducerFactory<String, String> producerFactory()
+	public ProducerFactory<String, Patients> producerFactory()
 	{
-		return new DefaultKafkaProducerFactory<String, String>(producerConfigSource());
+		return new DefaultKafkaProducerFactory<String, Patients>(
+				producerConfigSource());
 	}
 	
 	
@@ -37,7 +41,7 @@ public class KafkaProducerConfiguration
 		Map<String, Object> producerConfigSourceMap = new HashMap<String, Object>();
 		producerConfigSourceMap.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
 		producerConfigSourceMap.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-		producerConfigSourceMap.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+		producerConfigSourceMap.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
 		return producerConfigSourceMap;
 	}
 }
